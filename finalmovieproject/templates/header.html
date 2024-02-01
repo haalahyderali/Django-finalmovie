@@ -1,0 +1,75 @@
+{% load static %}
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">
+    <img src="{% static 'img/logo.jpg' %}" width="40" height="30" class="d-inline-block align-top" alt="">
+    Movie Store
+  </a>
+
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Categories
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'finalmovieapp:allMoviesCat' %}">All Movies</a>
+            <div class="dropdown-divider"></div>
+            {% for cat in links %}
+            <a class="dropdown-item" href="{{cat.get_url}}">{{cat.name}}</a>
+            {% endfor %}
+
+        </div>
+      </li>
+    </ul>
+
+
+
+      {% if user.is_authenticated %}
+
+        <a href="{% url 'credentials:profile' %}" title="Update my profile">Hi {{request.user | title}}, View Profile </a>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu">
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="profile-pic">
+                        <img src="{{user.profile.avatar.url}}" alt="Profile Picture" width="40px" height="40px">
+                    </div>
+                    <!-- You can also use icon as follows: -->
+                    <!--  <i class="fas fa-user"></i> -->
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                    <li><a class="dropdown-item" href="{% url 'credentials:profile' %}"> Edit Profile </a></li>
+                    <li><a class="dropdown-item" href="/cbvadd"> Add Movies </a></li>
+                    <li><a class="dropdown-item" href="{% url 'finalmovieapp:movies' %}"> View Added Movies </a></li>
+
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a></li>
+                </ul>
+            </li>
+        </ul>
+
+       {% else %}
+        <button style="margin-left:10px; margin-right:10px;" class="btn btn-danger" onclick='window.location.href = "/register"'>Register</button>
+
+        <button style="margin-left:10px; margin-right:10px;" class="btn btn-danger navbar-btn" onclick='window.location.href = "/login"'>Login</button>
+       {% endif %}
+
+
+        <form class="form-inline my-2 my-lg-0" action="{% url 'searchapp:searchResult' %}" method="get" >
+            {% csrf_token %}
+            <input style="text-align:right;" class="form-control mr-sm-2" type="search" name="q" placeholder="Search" aria-label="Search">
+            <button style="text-align:right;" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
+
+    </div>
+</nav>
+
+<!--https://source.unsplash.com/250x250?girl-->

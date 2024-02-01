@@ -1,0 +1,47 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+<br><br><br>
+<br>
+<br>
+<br>
+
+<br>
+<br>
+<div class="center">
+
+	<form method="post" novalidate class="card">
+	 	{%csrf_token %}
+	 	
+	 	<h2>Add Comments</h2>
+		{% for field in form %}
+			{% if field.name == 'completed' %}
+				<p>
+					{{ field.label_tag }}
+					{{ field }}
+				</p>
+				{% if field.errors %}
+	        		<small class="error">{{ field.errors|striptags  }}</small> 
+	        	{% endif %}
+			{% else %}
+	    		{{ field.label_tag }} 
+	        	{{ field }}
+	        	{% if field.errors %}
+	        		<small class="error">{{ field.errors|striptags  }}</small> 
+	        	{% endif %}
+	        {% endif %}
+		{% endfor %}
+
+		<br>
+		<div class="form-buttons">
+
+            <button type="submit" value="Save" class="btn btn-primary">Add comments</button>
+                <br>
+		</div>
+		<br><br>
+	</form>
+</div>
+
+
+{%endblock content%}

@@ -1,0 +1,45 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+<br><br><br>
+<br>
+<br>
+<br>
+
+<br>
+<br>
+<div class="center">
+
+	<form method="post" enctype="multipart/form-data" novalidate class="card">
+	 	{%csrf_token %}
+	 	
+	 	<h2>Add Movies</h2>
+		{% for field in form %}
+			{% if field.name == 'completed' %}
+				<p>
+					{{ field.label_tag }}
+					{{ field }}
+				</p>
+				{% if field.errors %}
+	        		<small class="error">{{ field.errors|striptags  }}</small> 
+	        	{% endif %}
+			{% else %}
+	    		{{ field.label_tag }} 
+	        	{{ field }}
+	        	{% if field.errors %}
+	        		<small class="error">{{ field.errors|striptags  }}</small> 
+	        	{% endif %}
+	        {% endif %}
+		{% endfor %}
+
+		<br>
+		<div class="form-buttons">
+			<input type="submit" value="Save" class="btn btn-primary"/><br>
+		</div>
+		<br><br>
+	</form>
+</div>
+
+
+{%endblock content%}

@@ -1,0 +1,61 @@
+<!--home page-->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadescription %}
+        Welcome to ABC Store
+{% endblock %}
+
+{% block title %}
+    {% if category %}
+        {{category.name}} - Movie Store
+    {% else %}
+        Home
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="mx-auto">
+    {% if category %}
+</div>
+    <br>
+    <div>
+        <h1 class="text-center my_title">{{category.name}}</h1>
+    </div>
+    {% else %}
+<br>
+    <div>
+        <h1 class="text-center my-title">Our Movies Store </h1>
+
+
+    </div>
+<br>
+    {% endif %}
+
+
+    <div class="container">
+        <div class="row mx-auto">
+            {% for movie in movies %}
+            <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-lg-4 ">
+                <div class="card text-center" style="min-width: 18rem;">
+                    <a href="{{movie.get_url}}"> <img class="card-img-top my_image" style="height:280px;" src="{{movie.image.url}}" alt="{{movie.name}}"> </a>
+                    <div class="card-body">
+                        <h4><strong>Movie : </strong>{{movie.name}}</h4>
+                        <p><strong>Release Date : </strong>{{movie.date}}</p>
+                        <p><strong>Actors : </strong>{{movie.actors}}</p>
+                        <p><strong>Genre : </strong>{{movie.category}}</p>
+                        <a href="{{movie.get_url}}" class="btn btn-warning" >View More Detais</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+<br>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{%extends 'base.html'%}
+
+{%block content%}
+
+<div class="center">
+	<h2>Added Movies List</h2>
+	{% if movies %}
+	<ul class="tasks">
+		{% for movie in movies %}
+			<li><a href="{{movie.get_url}}" class="">{{ movie.name }}</a>
+				 <div  class="task-controls">
+				 	<a href="{% url 'finalmovieapp:cbvdelete' movie.id %}"><i class="bi bi-trash"></i> </a>
+					<a href="{% url 'finalmovieapp:cbvupdate' movie.id %}"><i class="bi bi-pencil-square"></i></a>
+		         </div>
+		    </li>
+		{% endfor %}
+	{% else %}
+		<p>🎉 Yay, you have no pending tasks!</p>
+	{% endif %}
+	</ul>
+</div>
+{%endblock content%}

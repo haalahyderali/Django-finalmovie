@@ -1,0 +1,91 @@
+<!--details of each movie page-->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block metadescription %}
+    {{movie.desc|truncatewords:155}}
+{% endblock %}
+
+{% block title %}
+        {{movie.name}}
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="row my_prod_row_class">
+    <div class="mx-auto">
+        <br>
+        <p><a href="{% url 'finalmovieapp:allMoviesCat' %}">Home</a> |
+            <a href="{{movie.category.get_url}}">{{movie.category}} </a> | {{movie.name}} </p>
+    </div>
+</div>
+
+<div class="container">
+    <br>
+
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <div style="min-width: 18rem;">
+                <img src="{{movie.image.url}}" alt="{{movie.name}}" height="450px" width="500px">
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+            <div>
+                <h1 class="my_prod_title"><strong>Movie : </strong>{{movie.name}}</h1>
+                <p><strong>Release Date : </strong>{{movie.date}}</p>
+                <p><strong>Actors : </strong>{{movie.actors}}</p>
+                <p><strong>Genre : </strong>{{movie.category}}</p>
+
+
+                <p class="my_prod_title"><strong>Product Description : </strong></p>
+                <p class="text-justify my_prod_text">{{movie.desc}}</p>
+
+                <p><strong>Trailer : </strong><a href="{{movie.youtubelink}}">{{movie.youtubelink}}</a></p>
+                <p><strong>Uploaded by : </strong>{{movie.user}}</p>
+                <a class="btn btn-warning" href="{% url 'finalmovieapp:cbvupdate' movie.id %}">Update </a>
+                <a class="btn btn-danger" href="{% url 'finalmovieapp:cbvdelete' movie.id %}">Delete </a>
+
+                <br>
+                <br>
+                <hr>
+                <h2>Comments..</h2>
+
+                {% if not movie.comments.all %}
+                    No comments yet..<a href="{% url 'finalmovieapp:add_comment' movie.pk %}">Add One</a>
+                {% else %}
+                <a href="{% url 'finalmovieapp:add_comment' movie.pk %}"> Add Comments </a>
+                <br>
+                <br>
+                    {% for comment in movie.comments.all %}
+                        <strong>
+                            {{comment.name}} -
+                            {{comment.date_added}}
+                        </strong>
+                        <br>
+                        {{comment.body}}
+                <br>
+                <br>
+
+                {% endfor %}
+                {% endif %}
+                <br>
+                <hr>
+
+
+
+
+
+
+
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<br><br><br>
+
+{% endblock %}
